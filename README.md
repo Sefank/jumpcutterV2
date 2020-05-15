@@ -1,26 +1,45 @@
 # jumpcutterV2
-automatically edits videos, originally inspired by carykh
+Automatically edits videos - Originally inspired by carykh.
 
-original inspiration: https://www.youtube.com/watch?v=DQ8orIurGxw
+Carykh's video: https://www.youtube.com/watch?v=DQ8orIurGxw
 
-the program he made: https://github.com/carykh/jumpcutter
+Carykh's program: https://github.com/carykh/jumpcutter
 
-I saw some limits to the approach
-1. he extracted EVERY frame and put it into a single, giant folder. While that is easier to work with, it will require GBs, maybe even TBs of user's storage space (albeit temporary)
-2. there were some syncing issues involved if it worked with long videos
-3. while it was working on the audio, it kept making small, temp audio files that made it very slow
+# Windows Download
+[fast_video.exe](https://github.com/seaty6/jumpcutterV2/releases/latest/download/fast_video.exe)
 
-I decided to solve it, and heavily modified the code so it can fix all those problems
+The above is simply the python file compiled with pyinstaller - it should work on Windows without having to install Python, but you will have to install ffmpeg. The easiest way to do this is to install chocolatey and let it do the work for you.
+From an administrative command prompt:
+
+```@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command " [System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"```
+
+Close, then reopen the command prompt, and run:
+
+`choco install ffmpeg`
+
+And you're done! You can now run the executable.
 
 # Differences
-due to the modifications, you can no longer specify silent-threshold, sounded_speed, frame_margin, frame_rate, frame_quality, that is all handled internally. (it also doesn't downlaod youtube video automatically). I tried to make the code a lot simpler but I'm open to PR request that can still enhance the repo
-
-PS, if you want sounded speech speedup, I would recommend just speeding up the video on the player
+1. Can no longer specify: sounded_speed, frame_rate, and frame_quality.
+2. Can't download youtube videos
+3. Doesn't take up a large amount of space by splitting up each frame
+4. Goes much faster.
 
 # Usage
-`python3 fast_video.py {video file name} {silent speed(float)}`
+Windows:
+`fast_video.exe {video file name} --silentSpeed {float} --silentThreshold {float}`
 
-# heads up
-I've only tested this with mp4 file, not sure about other format
+Python:
+`python3 fast_video.py {video file name} --silentSpeed {float} --silentThreshold {float}`
 
-I also use python3, not planning any backward compatibility
+
+Using shorts:
+`fast_video.exe {video file name} -s {float} -t {float}`
+
+> Note: On Linux and Windows, `python3` doesn't work. Use `python` instead. Alternatively, you could use the executable if on Windows, in the releases tab.
+# Heads up
+Based on Python3
+
+# Credits:
+Thanks to [gusals3587](https://github.com/gusals3587/jumpcutterV2) for reworking the code to be much more optimized<br>
+Thanks to [WyattBlue](https://github.com/WyattBlue/jumpcutterV2) for adding back the all but the frame_margin parameter
